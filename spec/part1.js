@@ -529,6 +529,20 @@
         _.reduce([1, 2, 3, 4], add)
       });
 
+      _.reduce = function(collection, iterator, accumulator) {
+        var reducedValue = accumulator;
+        var counter = 0;
+        _.each(collection, function(item) {
+          if (reducedValue === undefined && counter === 0) {
+            reducedValue = collection[0];
+          } else {
+            reducedValue = iterator(reducedValue, item);
+          }
+          counter++;
+        });
+        return reducedValue
+      };
+
       it('should be a function', function() {
         expect(_.reduce).to.be.an.instanceOf(Function);
       });
