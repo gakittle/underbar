@@ -8,6 +8,10 @@
         _.identity(1);
       });
 
+      _.identity = function(arg) {
+        return arg;
+      };
+
       it('should return whatever value is passed into it', function() {
         var uniqueObject = {};
         expect(_.identity(1)).to.equal(1);
@@ -16,6 +20,7 @@
         expect(_.identity(uniqueObject)).to.equal(uniqueObject);
       });
     });
+
 
     describe('first', function() {
       checkForNativeMethods(function() {
@@ -44,6 +49,12 @@
         _.last([1,2,3]);
       });
 
+      _.last = function(array, n) {
+        if (n > array.length) {
+          return array;
+        } return n === undefined ? array[array.length-1] : array.slice(array.length - n, array.length);
+      };
+
       it('should pull the last element from an array', function() {
         expect(_.last([1,2,3])).to.equal(3);
       });
@@ -65,6 +76,19 @@
       checkForNativeMethods(function() {
         _.each([1,2,3,4], function(number) {});
       });
+
+      _.each = function(collection, func) {
+        if (Array.isArray(collection)) {
+          for (var i = 0; i < collection.length; i++) {
+            func(collection[i], i, collection);
+          }
+        } else if (typeof(collection) === 'object') {
+          for (var key in collection) {
+            func(collection[key], key, collection);
+          }
+        }
+      };
+        
 
       it('should be a function', function() {
         expect(_.each).to.be.an.instanceOf(Function);
@@ -220,6 +244,16 @@
       checkForNativeMethods(function() {
         _.indexOf([10, 20, 30, 40], 40)
       });
+
+      _.indexOf = function(array, target) {
+        var result = -1;
+        _.each(array, function(item, index) {
+          if (item === target && result === -1) {
+            result = index;
+          }
+        });
+        return result;
+      };
 
       it('should find 40 in the list', function() {
         var numbers = [10, 20, 30, 40, 50];
