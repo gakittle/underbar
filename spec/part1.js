@@ -8,10 +8,6 @@
         _.identity(1);
       });
 
-      _.identity = function(arg) {
-        return arg;
-      };
-
       it('should return whatever value is passed into it', function() {
         var uniqueObject = {};
         expect(_.identity(1)).to.equal(1);
@@ -49,12 +45,6 @@
         _.last([1,2,3]);
       });
 
-      _.last = function(array, n) {
-        if (n > array.length) {
-          return array;
-        } return n === undefined ? array[array.length-1] : array.slice(array.length - n, array.length);
-      };
-
       it('should pull the last element from an array', function() {
         expect(_.last([1,2,3])).to.equal(3);
       });
@@ -76,18 +66,6 @@
       checkForNativeMethods(function() {
         _.each([1,2,3,4], function(number) {});
       });
-
-      _.each = function(collection, func) {
-        if (Array.isArray(collection)) {
-          for (var i = 0; i < collection.length; i++) {
-            func(collection[i], i, collection);
-          }
-        } else if (typeof(collection) === 'object') {
-          for (var key in collection) {
-            func(collection[key], key, collection);
-          }
-        }
-      };
 
       it('should be a function', function() {
         expect(_.each).to.be.an.instanceOf(Function);
@@ -244,16 +222,6 @@
         _.indexOf([10, 20, 30, 40], 40)
       });
 
-      _.indexOf = function(array, target) {
-        var result = -1;
-        _.each(array, function(item, index) {
-          if (item === target && result === -1) {
-            result = index;
-          }
-        });
-        return result;
-      };
-
       it('should find 40 in the list', function() {
         var numbers = [10, 20, 30, 40, 50];
 
@@ -285,16 +253,6 @@
         _.filter([1, 2, 3, 4], isEven)
       });
 
-      _.filter = function(collection, test) {
-        var result = [];
-        _.each(collection, function(item) {
-          if (test(item)) {
-            result.push(item);
-          }
-        });
-        return result;
-      };
-
       it('should return all even numbers in an array', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var evens = _.filter([1, 2, 3, 4, 5, 6], isEven);
@@ -324,17 +282,6 @@
         _.reject([1, 2, 3, 4, 5, 6], isEven)
       });
 
-      _.reject = function(collection, test) {
-        var rejects = [];
-        var accept = _.filter(collection, test);
-        _.each(collection, function(item) {
-          if (_.indexOf(accept, item) === -1) {
-            rejects.push(item);
-          }
-        });
-        return rejects;
-      };
-
       it('should reject all even numbers', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var odds = _.reject([1, 2, 3, 4, 5, 6], isEven);
@@ -359,24 +306,6 @@
     });
 
     describe('uniq', function() {
-
-      _.uniq = function(array, isSorted, iterator) {
-        var uniques = [];
-        if (isSorted) {
-          _.each(array, function(item) {
-            if (iterator(item)) {
-              uniques.push(item);
-            }
-          });
-          return uniques;
-        }
-        _.each(array, function(item) {
-          if (_.indexOf(uniques, item) === -1) {
-            uniques.push(item);
-          }
-        });
-        return uniques;
-      };
 
       it('should not mutate the input array', function() {
         var input = [1, 2, 3, 4, 5];
@@ -435,14 +364,6 @@
           return num * 2;
         })
       });
-
-      _.map = function(collection, iterator) {
-        var results = [];
-        _.each(collection, function(item) {
-          results.push(iterator(item));
-        });
-        return results;
-      };
 
       it('should not mutate the input array', function() {
         var input = [1,2,3,4,5];
@@ -528,20 +449,6 @@
         var add = function(tally, item) {return tally + item; };
         _.reduce([1, 2, 3, 4], add)
       });
-
-      _.reduce = function(collection, iterator, accumulator) {
-        var reducedValue = accumulator;
-        var counter = 0;
-        _.each(collection, function(item) {
-          if (reducedValue === undefined && counter === 0) {
-            reducedValue = collection[0];
-          } else {
-            reducedValue = iterator(reducedValue, item);
-          }
-          counter++;
-        });
-        return reducedValue
-      };
 
       it('should be a function', function() {
         expect(_.reduce).to.be.an.instanceOf(Function);
