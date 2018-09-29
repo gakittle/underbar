@@ -88,7 +88,6 @@
           }
         }
       };
-        
 
       it('should be a function', function() {
         expect(_.each).to.be.an.instanceOf(Function);
@@ -286,6 +285,16 @@
         _.filter([1, 2, 3, 4], isEven)
       });
 
+      _.filter = function(collection, test) {
+        var result = [];
+        _.each(collection, function(item) {
+          if (test(item)) {
+            result.push(item);
+          }
+        });
+        return result;
+      };
+
       it('should return all even numbers in an array', function() {
         var isEven = function(num) { return num % 2 === 0; };
         var evens = _.filter([1, 2, 3, 4, 5, 6], isEven);
@@ -314,6 +323,17 @@
         var isEven = function(num) { return num % 2 === 0; };
         _.reject([1, 2, 3, 4, 5, 6], isEven)
       });
+
+      _.reject = function(collection, test) {
+        var rejects = [];
+        var accept = _.filter(collection, test);
+        _.each(collection, function(item) {
+          if (_.indexOf(accept, item) === -1) {
+            rejects.push(item);
+          }
+        });
+        return rejects;
+      };
 
       it('should reject all even numbers', function() {
         var isEven = function(num) { return num % 2 === 0; };
