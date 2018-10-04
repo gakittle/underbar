@@ -200,12 +200,13 @@
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
     return _.reduce(collection, function(isTrue, item) {
-      if (isTrue === false) {
+      if (!isTrue) {
         return false;
-      }
-      if (iterator(item)) {
-        return true;
-      } return false;
+      } else if (typeof(iterator) === 'function') {
+        if(iterator(item)) {
+          return true;
+        } return false;
+      } else return item ? true : false;
     }, true);
   };
 
