@@ -203,9 +203,7 @@
       if (!isTrue) {
         return false;
       } else if (typeof(iterator) === 'function') {
-        if(iterator(item)) {
-          return true;
-        } return false;
+        return iterator(item) ? true : false;
       } else return item ? true : false;
     }, true);
   };
@@ -213,8 +211,15 @@
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
-    // TIP: There's a very clever way to re-use every() here.
-  };
+  //   // TIP: There's a very clever way to re-use every() here.
+    return _.reduce(collection, function(isTrue, item) {
+      if (isTrue) {
+        return true;
+      } else if (typeof(iterator) === 'function') {
+        return iterator(item) ? true : false;
+      } else return item ? true : false;
+    }, false);
+  }
 
 
   /**
