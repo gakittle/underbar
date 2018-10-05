@@ -330,11 +330,15 @@
 
       result = func.apply(this, arguments);
 
+
       var argumentArr = [];
-      for (var k = 0; k < arguments.length; k++) {
-        argumentArr.push(arguments[k]);
-      }
-      argumentList.push(argumentArr);
+      if(Array.isArray(arguments[k])) {
+          argumentList.push(arguments[k]);
+        } else {for (var k = 0; k < arguments.length; k++) {
+            argumentArr.push(arguments[k]);
+            argumentList.push(argumentArr);
+          }
+        }
       funcList.push(result);
       return result;
       
