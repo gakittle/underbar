@@ -313,35 +313,12 @@
       for (var i = 0; i < argumentList.length || i === 0; i++) {
         if (typeof(argumentList[i]) !== 'undefined') {
           if(argumentList[i] === JSON.stringify(arguments)) {
-
             return funcList[i];
-            // var match = true;
-            
-            // for (var j = 0; j < argumentList[i].length; j++) {
-            //   if(!_.contains(arguments, argumentList[i][j])) {
-            //     match = false;
-            //   }
-            // }
-
-            // if(match) {
-            //   return funcList[i];
-            // }
           }
         }
       }
 
       result = func.apply(this, arguments);
-
-
-      // var argumentArr = [];
-      // if(Array.isArray(arguments[k])) {
-      //     argumentList.push(arguments[k]);
-      //   } else {for (var k = 0; k < arguments.length; k++) {
-      //       argumentArr.push(arguments[k]);
-      //       argumentList.push(argumentArr);
-      //     }
-      //   }
-
       argumentList.push(JSON.stringify(arguments));
       funcList.push(result);
       return result;
