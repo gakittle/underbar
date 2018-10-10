@@ -347,7 +347,6 @@
       return func.apply(this, otherArgs);
     };
     setInterval(delayedFunc, wait);
-    return delayedFunc;
   };
 
 
